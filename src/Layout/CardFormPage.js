@@ -26,8 +26,8 @@ export default function CardFormPage({
             <textarea value={formData.back} onChange={handleChange} name="back" id="card-back" />
           </div>
           <div>
-            <button onClick={onCancel} type="button">{cancelLabel}</button>
-            <button type="submit">{submitLabel}</button>
+            <button onClick={onCancel} type="button" className="btn btn-secondary">{cancelLabel}</button>
+            <button type="submit" className="btn btn-primary">{submitLabel}</button>
           </div>
         </form>
       );

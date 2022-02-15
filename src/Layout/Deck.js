@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
-import {Link, useRouteMatch, useParams} from "react-router-dom"
-import {readDeck, deleteDeck} from "../utils/api/index.js"
+import {Link, useRouteMatch, useParams, useHistory} from "react-router-dom"
+import {readDeck, deleteDeck, deleteCard} from "../utils/api/index.js"
 import NavBar from  "./NavBar"
 
 /*The path to this screen should include the deckId (i.e., /decks/:deckId).
@@ -34,6 +34,8 @@ export default function Deck() {
 
     const [deck, setDeck] = useState({})
 
+    const history = useHistory()
+
     useEffect(() => {
         const abortController = new AbortController()
         function getDeck() {
@@ -43,12 +45,12 @@ export default function Deck() {
             } else {
                 throw error
             }
-        })
-        return () => abortController.abort
+        })  
       }
       getDeck()
+      return () => abortController.abort
     }, [deckId])
-   
+
     return (
         <div>
           <div className="mb-5">
@@ -58,16 +60,21 @@ export default function Deck() {
             <Link to={`${url}/edit`}><button type="button" className="btn btn-secondary">Edit</button></Link>
             <Link to={`${url}/study`}><button type="button" className="btn btn-primary">Study</button></Link>
             <Link to={`${url}/cards/new`}><button type="button" className="btn btn-primary">+ Add Card</button></Link>
-            <button type="button" className="btn btn-danger">Delete</button>
+            <button type="button" className="btn btn-danger" onClick={() => {if(window.confirm("Delete this deck?"))deleteDeck(deckId); history.push("/")}}>Delete</button>
           </div>
           <h2>Cards</h2>
           {!deck.cards ? "Loading" :
            deck.cards.map((card, index) => (
             <div key={index} className="card">
               <div className="card-body">
-                <span>{card.front}</span>
-                <span>{card.back}</span>
-                <button type="button" className="btn btn-danger">Delete</button>
+                <div className="d-flex justify-content-between">
+                  <span>{card.front}</span>
+                  <span>{card.back}</span>
+                </div>
+                <div className="d-flex justify-content-end">
+                  <Link to={`${url}/cards/${card.id}/edit`}><button type="button" className="btn btn-secondary">Edit</button></Link>
+                  <button type="button" className="btn btn-danger" onClick={() => {if(window.confirm("Delete this Card?"))deleteCard(card.id); history.go(0)}}>Delete</button>
+                </div>
               </div>
             </div>
           ))}
@@ -75,4 +82,4 @@ export default function Deck() {
     )
 }
 
-/* TODO: add delete functionality to both delete deck and delete card. use window.main() to create warning prompt */
+/* TODO: add delete functionality to both delete deck and delete card. use window.confirm() to create warning prompt */

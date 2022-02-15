@@ -5,8 +5,10 @@ import {Link} from "react-router-dom"
 
 export default function NavBar({name, subname}) {
     return (
-        <>
-          <p><span><Link to="/">Home</Link></span> / <span>{name}</span> / <span>{subname}</span></p>
-        </>
+        <div className="bg-light p-2">
+        {!subname ?
+          <p><span><Link to="/">Home</Link></span> / <span>{name}</span></p> :
+          <p><span><Link to="/">Home</Link></span> / <span>{name}</span> / <span>{subname}</span></p>}
+        </div>
     )
 }
