@@ -2,13 +2,15 @@ import React from "react";
 import {Switch, Route} from "react-router-dom"
 import Header from "./Header";
 import NotFound from "./NotFound";
-import DeckList from "../DeckList"
-import Deck from "../Deck"
-import Study from "../Study"
-import AddCard from "../AddCard"
-import EditCard from "../EditCard"
-import CreateDeck from "../CreateDeck"
-import EditDeck from "../EditDeck"
+import DeckList from "../Deck/DeckList"
+import Deck from "../Deck/Deck"
+import Study from "../Study/Study"
+import AddCard from "../Card/AddCard"
+import EditCard from "../Card/EditCard"
+import CreateDeck from "../Deck/CreateDeck"
+import EditDeck from "../Deck/EditDeck"
+
+//Home page of the flash card app. Contains all routes to specific screens.
 
 
 function Layout() {
